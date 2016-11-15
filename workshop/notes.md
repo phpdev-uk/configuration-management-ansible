@@ -34,6 +34,9 @@ systems but are new to either configuration management or Ansible.
 
 ## Requirements
 
+Please see the separate requirements document for full details of the software
+and hardware requirements for this workshop.
+
 ## Configuration Management
 
 Back in the Dark Ages, system administrators would manage servers by logging
