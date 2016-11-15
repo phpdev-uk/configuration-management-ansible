@@ -91,3 +91,19 @@ There is no particularly strong technical reason to use Ansible over any of the
 alternatives. Ansible probably has the gentlest learning curve of all the major
 configuration management systems, and the fewest dependencies, but the final
 choice is largely a personal or business preference.
+
+## Terminology and features
+
+Ansible divides machines into two categories:
+
+*Control machine:* The machine which the Ansible client runs on. For the
+purposes of the workshop, this will be your laptop.
+
+*Managed node:* The machine which will have its configuration managed by
+Ansible. In the workshop, this will be a virtual machine running on your laptop.
+Sometimes nodes are referred to as *hosts*.
+
+Ansible can manage Linux, OS X and Windows nodes, thought to keep things simple
+we'll focus exclusively on Linux. We will also assume that the managed nodes are
+servers, although the majority of material applies to desktops as well (e.g. if
+you wanted to manage a cluster of machines in a teaching environment).
