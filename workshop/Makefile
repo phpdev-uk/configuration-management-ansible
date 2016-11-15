@@ -1,10 +1,13 @@
 SRC=notes.md
 PDF=$(SRC:.md=.pdf)
 
-all: $(PDF)
+all: notes-print.pdf notes-screen.pdf
 
-%.pdf: %.md
+notes-print.pdf: notes.md
 	pandoc $< -o $@
+
+notes-screen.pdf: notes.md
+	pandoc -V mainfont=Ubuntu --latex-engine=xelatex $< -o $@
 
 clean:
 	rm -rf *.pdf
