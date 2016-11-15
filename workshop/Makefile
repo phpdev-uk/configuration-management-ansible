@@ -11,5 +11,6 @@ notes-screen.pdf: notes.md
 
 clean:
 	rm -rf *.pdf
+	rm -rf *.log
 
 .PHONY: clean
