@@ -225,3 +225,82 @@ beyond the scope of this workshop).
 Other than whether they are provided by default and how they are installed,
 you will use Core, Extras and Third Party modules in the same way. We will only
 be using Core and Extras modules in this workshop.
+
+## Our first server
+
+Our first server will be based on an Ubuntu image, on top of which we will
+install a firewall and configure it to allow all outgoing traffic and block all
+incoming traffic (except SSH).
+
+First of all, let's clone the Git repository which includes all of the workshop
+exercises:
+
+```
+git clone https://github.com/pwaring/configuration-management-ansible.git
+```
+
+Then change into the `workshop/ex01` directory:
+
+```
+cd configuration-management-ansible/workshop/ex01
+```
+
+This directory contains an `ansible` directory and a file called `Vagrantfile`
+with the following contents:
+
+```ruby
+Vagrant.configure(2) do |config|
+  config.vm.box = "ubuntu/trusty64"
+end
+```
+
+This tells Vagrant to configure a virtual machine with the following options:
+
+ * `config.vm.box`: The default image to use for the virtual machine, in this
+ case a 64 bit Ubuntu Trusty 14.04 image which is maintained by the community.
+
+Start the virtual machine now by running:
+
+```
+vagrant up
+```
+
+Whilst the VM is starting up, we will create the three basic files required to
+managed the node and install a basic firewall.
+
+### Configuration file
+
+The most basic configuration file tells Ansible where to find the inventory
+file, which we'll discuss shortly. By convention, the inventory file is called
+`hosts`. We also want to put all of our options into the `defaults` group, which
+we can do by using the `[group]` syntax.
+
+Create a file in the `ex01/ansible` directory called `ansible.cfg` and add the
+following content:
+
+```ini
+[defaults]
+inventory = hosts
+```
+
+Ansible's default behaviour is to check the host key each time it connects to a
+node. In nearly all cases this is the correct behaviour, but because we will be
+creating and destroying virtual machines several times in the workshop, we need
+to disable this functionality by adding one more line to `ansible.cfg`:
+
+```ini
+host_key_checking = False
+```
+
+Only use this option for testing, and **never** in production.
+
+Your `ansible.cfg` should now contain the following:
+
+```ini
+[defaults]
+inventory = hosts
+host_key_checking = False
+```
+
+Although there are dozens of options which can be specified in the configuration
+file, these are the only two which we will be using in the workshop.
