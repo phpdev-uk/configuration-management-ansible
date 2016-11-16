@@ -304,3 +304,50 @@ host_key_checking = False
 
 Although there are dozens of options which can be specified in the configuration
 file, these are the only two which we will be using in the workshop.
+
+### Inventory file
+
+Create a file in the `ex01/ansible` directory called `hosts` and add the
+following content. Everything from `vagrant` onwards must be on one line, there
+is only a break in the notes because of margin constraints.
+
+```ini
+vagrant ansible_host=127.0.0.1 ansible_port=2222 ansible_user=vagrant
+ansible_private_key_file=../.vagrant/machines/default/virtualbox/private_key
+```
+
+As with the configuration file, a name between two square brackets defines a
+group, which contains one or more nodes. This allows you to manage a number of
+nodes without having to refer to each one individually.
+
+Each line under a group refers to a specific node. The first item is the name of
+the node, in this case `vagrant` (there is no requirement for the name used by
+Ansible to match the DNS hostname). After the name is a set of key-value pairs,
+which must all be on the same line as the name.
+
+Hopefully most of the names are self-explanatory, but here's a rundown of which
+each one does:
+
+ * `ansible_host`: The hostname or IP address of the node. Since we're using
+ Vagrant to run a virtual machine locally, the address is 127.0.0.1.
+ * `ansible_port`: The port to use for SSH connections. This is optional and
+ defaults to port 22, but Vagrant uses a non-standard port for SSH (usually
+ 2222 for the first virtual machine).
+ * `ansible_user`: The username for SSH connections. Vagrant defaults to a user
+ called `vagrant` which has `sudo` access without the need for a password.
+ * `ansible_private_key_file`: The path to the private key used for SSH
+ connections. This defaults to `~/.ssh/id_rsa`, but we need to provide a
+ specific value for Vagrant.
+
+**Note:** If you are running Debian, or any other distribution with a version of
+Vagrant earlier than 1.7, you will need to set `ansible_private_key_file` to:
+
+```
+~/.vagrant.d/insecure_private_key
+```
+
+This is because before version 1.7, Vagrant used the same private key for all
+virtual machines.
+
+Although there are many other options that you can specify in the inventory
+file, these are the only ones we will be using in the workshop.
