@@ -129,9 +129,9 @@ push deployment is generally easier to get up and running.
 Ansible has a small set of requirements for both the controlm machine and the
 managed node.
 
-*Control machine:* Python 2.5 or later.
+**Control machine:** Python 2.5 or later.
 
-*Managed nodes:* Python 2.5 or later, SSH service.
+**Managed nodes:** Python 2.5 or later, SSH service.
 
 There is no requirement for the operating system on the control machine to match
 the nodes, so you can control Linux nodes from a macOS machine, Windows nodes
@@ -153,3 +153,75 @@ default (e.g. Ubuntu Server).
 Ansible can manage anything from a single node up to thousands of nodes. For
 simplicity though we will still to a single node for most of the examples in
 this workshop.
+
+## Ansible components
+
+Ansible is split into several components:
+
+ * Configuration file
+ * Inventory file
+ * Playbooks
+ * Modules
+
+As a convention, we place all Ansible files in a subdirectory named `ansible`.
+All other files used by Ansible (e.g. Apache configuration files) are stored in
+`ansible/files`.
+
+All Ansible files are plain text so you can use whichever editor you prefer. You
+can (and should!) also put the files into version control to keep a history of
+changes made.
+
+### Configuration file
+
+**Filename:** `ansible.cfg`
+
+The configuration file allows us to specify defaults which apply to all managed
+nodes. This file is structured in the same way as `.ini` files, which consist
+of groups of key-value pairs separated by the equals symbol (`=`).
+
+Example:
+
+```ini
+[defaults]
+hostfile = hosts
+host_key_checking = False
+```
+
+### Inventory file
+
+**Filename:** `hosts`
+
+The inventory file lists all the managed nodes. To keep things simple, we will
+be using a single group which contains one node.
+
+Example:
+
+```
+[testing]
+vagrant ansible_host=127.0.0.1 ansible_port=2222 ansible_user=vagrant
+ansible_private_key_file=../.vagrant/machines/default/virtualbox/private_key
+```
+
+### Playbooks
+
+**Filename:** `*.yml`
+
+Playbooks are the core of Ansible. They are written in YAML (Yet Another Markup
+Language) and describe a series of tasks to be performend on a node.
+
+### Modules
+
+Modules are abstractions of functionality which you can use in your playbooks.
+For example, there is an `apt` module, which makes it easy to install software
+on systems which use APT for package management, such as Debian and Ubuntu.
+
+Ansible ships with two collections of modules: *Core* and *Extras*. Core modules
+will always be included with Ansible, whereas those in Extras may be separated
+in future releases. Popular modules in Extras may be promoted to Core over time.
+There is also an active community of developers who have written their own
+*Third Party* modules, and of course you can do the same (though doing so is
+beyond the scope of this workshop).
+
+Other than whether they are provided by default and how they are installed,
+you will use Core, Extras and Third Party modules in the same way. We will only
+be using Core and Extras modules in this workshop.
