@@ -32,7 +32,7 @@ a website at [pwaring.com](https://www.pwaring.com).
 This workshop is aimed at people who are familiar with administering Linux
 systems but are new to either configuration management or Ansible.
 
-## Requirements
+## Workshop requirements
 
 Please see the separate requirements document for full details of the software
 and hardware requirements for this workshop.
@@ -76,6 +76,10 @@ acquired by RedHat in October 2015, but this doesn't appear to have had an
 impact on development, and if anything it is likely to make life easier for
 system administrators already using RHEL, CentOS and OpenStack.
 
+In case you were wondering, an ansible is a fictional machine for communicating
+over large distances. It was first coined in *Rocannon's World* by Ursula K. Le
+Guin, and is used by other science fiction novels.
+
 ## Alternatives
 
 Although this workshop covers Ansible, it is worth spending a few minutes
@@ -95,7 +99,7 @@ alternatives. Ansible probably has the gentlest learning curve of all the major
 configuration management systems, and the fewest dependencies, but the final
 choice is largely a personal or business preference.
 
-## Terminology and features
+## Terminology
 
 Ansible divides machines into two categories:
 
@@ -110,3 +114,42 @@ Ansible can manage Linux, OS X and Windows nodes, thought to keep things simple
 we'll focus exclusively on Linux. We will also assume that the managed nodes are
 servers, although the majority of material applies to desktops as well (e.g. if
 you wanted to manage a cluster of machines in a teaching environment).
+
+### Push deployment
+
+Ansible uses *push deployment*, which means that changes are only deployed when
+you run the relevant command on the control machine (usually this will be
+`ansible-playbook`). The alternative mechanism, used by Puppet and Chef, is
+*pull deployment*, whereby nodes regularly check for configuration updates and
+apply them. There are advantages and disadvantages to both approaches, but
+push deployment is generally easier to get up and running.
+
+## Ansible requirements
+
+Ansible has a small set of requirements for both the controlm machine and the
+managed node.
+
+*Control machine:* Python 2.5 or later.
+
+*Managed nodes:* Python 2.5 or later, SSH service.
+
+There is no requirement for the operating system on the control machine to match
+the nodes, so you can control Linux nodes from a macOS machine, Windows nodes
+from a Linux machine etc. However, running Ansible on Windows (as a control
+machine or a managed node) is significantly more work than using Linux or macOS.
+
+No agent software needs to run on the nodes and there are no additional firewall
+rules required beyond allowing incoming SSH connections (you can restrict this
+by IP address, username etc. if required).
+
+For a single node, the easiest solution is usually to login straight after
+installation to enable SSH and install Python. If you are planning to manage
+more than a couple of nodes, it would make sense to create a base image which
+includes SSH and Python, although some Linux distributions come with both by
+default (e.g. Ubuntu Server).
+
+## Number of nodes
+
+Ansible can manage anything from a single node up to thousands of nodes. For
+simplicity though we will still to a single node for most of the examples in
+this workshop.
