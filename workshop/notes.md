@@ -501,7 +501,7 @@ the UFW installation lines):
 - name: enable incoming ssh
   ufw:
     rule: allow
-    to_port: 2222
+    to_port: ssh
 - name: allow all outgoing traffic
   ufw:
     direction: outgoing
@@ -520,8 +520,10 @@ Each task uses the `ufw` module (Extras) to perform a configuration action.
 Hopefully the YAML is self-documenting, but here is what each task does:
 
  1. Ensure that the UFW service has started (`enabled`).
- 1. Allow incoming SSH traffic on port 2222 (if the default port is used, you
-   can write `ssh` instead of `2222`).
+ 1. Allow incoming SSH traffic (if a service is running on the default port,
+   you can specify it by name). Note that because the firewall is running inside
+   the virtual machine, it sees SSH on the default port, whereas from outside
+   the virtual machine we need to connect on port 2222.
  1. Allow all outgoing traffic (default policy).
  1. Deny and log all incoming traffic (default policy).
  1. Reload UFW so that the rules take effect.
@@ -574,3 +576,60 @@ deny all incoming traffic, these two tasks did not result in changes.
 
 If you run the playbook again, you should see that seven tasks run successfully
 but this time there are no changes.
+
+Let's login to the virtual machine to verify that the rules have been setup
+correctly:
+
+```
+$ vagrant ssh
+vagrant@vagrant-ubuntu-trusty-64:~$ sudo ufw status
+Status: active
+
+To                         Action      From
+--                         ------      ----
+22                         ALLOW       Anywhere
+22 (v6)                    ALLOW       Anywhere (v6)
+```
+
+We can see that the UFW service is active and incoming SSH connections are
+allowed from anywhere, over IPv4 and IPv6. We can verify that the firewall is
+in place by using nmap to run a port scan against the virtual machine:
+
+```
+sudo nmap -sS 192.0.2.25
+```
+
+The output should be similar to:
+
+```
+Nmap scan report for 192.0.2.25
+Host is up (0.00056s latency).
+Not shown: 999 filtered ports
+PORT   STATE SERVICE
+22/tcp open  ssh
+MAC Address: 08:00:27:CC:95:5C (Oracle VirtualBox virtual NIC)
+
+Nmap done: 1 IP address (1 host up) scanned in 18.76 seconds
+```
+
+If we login to the virtual machine we can verify that UFW has blocked and logged
+the incoming traffic on all ports other than SSH:
+
+```
+vagrant@vagrant-ubuntu-trusty-64:~$ sudo tail -n 2 /var/log/syslog
+Nov 22 12:31:05 vagrant-ubuntu-trusty-64 kernel: [  156.774909] [UFW BLOCK]
+IN=eth1 OUT= MAC=08:00:27:cc:95:5c:0a:00:27:00:00:05:08:00 SRC=192.0.2.1
+DST=192.0.2.25 LEN=44 TOS=0x00 PREC=0x00 TTL=59 ID=9884 PROTO=TCP SPT=51556
+DPT=554 WINDOW=1024 RES=0x00 SYN URGP=0
+Nov 22 12:31:05 vagrant-ubuntu-trusty-64 kernel: [  156.774923] [UFW BLOCK]
+IN=eth1 OUT= MAC=08:00:27:cc:95:5c:0a:00:27:00:00:05:08:00 SRC=192.0.2.1
+DST=192.0.2.25 LEN=44 TOS=0x00 PREC=0x00 TTL=43 ID=63657 PROTO=TCP SPT=51556
+DPT=199 WINDOW=1024 RES=0x00 SYN URGP=0
+```
+
+We've finished with this virtual machine now. Run the following command inside
+the `ex01` directory to destroy the virtual machine and free up its resources:
+
+```
+vagrant destroy -f
+```
