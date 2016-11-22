@@ -1,3 +1,4 @@
 ex01/ansible/ansible.cfg
 ex01/ansible/hosts
 ex01/ansible/security.yml
+ex02/ansible/web.yml
