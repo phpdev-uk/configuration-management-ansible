@@ -489,3 +489,44 @@ $ vagrant ssh
 vagrant@vagrant-ubuntu-trusty-64:~$ sudo ufw status
 Status: inactive
 ```
+
+An inactive firewall with no filtering rules isn't very useful, so we'll add
+some tasks to the playbook (indented underneath `tasks` at the same level as
+the UFW installation lines):
+
+```
+- name: start ufw
+  ufw:
+    state: enabled
+- name: enable incoming ssh
+  ufw:
+    rule: allow
+    to_port: 2222
+- name: allow all outgoing traffic
+  ufw:
+    direction: outgoing
+    policy: allow
+- name: deny all incoming traffic
+  ufw:
+    direction: incoming
+    policy: deny
+    log: yes
+- name: reload ufw
+  ufw:
+    state: reloaded
+```
+
+Each task uses the `ufw` module (Extras) to perform a configuration action.
+Hopefully the YAML is self-documenting, but here is what each task does:
+
+ 1. Ensure that the UFW service has started (`enabled`).
+ 1. Allow incoming SSH traffic on port 2222 (if the default port is used, you
+   can write `ssh` instead of `2222`).
+ 1. Allow all outgoing traffic (default policy).
+ 1. Deny and log all incoming traffic (default policy).
+ 1. Reload UFW so that the rules take effect.
+
+We add the permissive rules first, followed by the defaults. The order is
+important, because the first rule matched is used. If we placed the default
+'deny all incoming traffic' rule before the 'enable incoming ssh' rule,
+incoming SSH connections would be blocked.
