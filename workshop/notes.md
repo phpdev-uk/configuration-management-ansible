@@ -530,3 +530,47 @@ We add the permissive rules first, followed by the defaults. The order is
 important, because the first rule matched is used. If we placed the default
 'deny all incoming traffic' rule before the 'enable incoming ssh' rule,
 incoming SSH connections would be blocked.
+
+Note that the UFW service will be reloaded even if Ansible has not made any
+changes to the rules. It is possible to reload services only if something has
+changed by creating a special type of task called a *handler*, and then
+*notifying* the handler whenever something changes. It's easy to forget to do
+this though, so the simplest and least error-prone option is to always reload
+the service at the end of the playbook.
+
+Run the playbook again and you should see the following output:
+
+```
+PLAY [Security playbook] *******************************************************
+
+TASK [setup] *******************************************************************
+ok: [vagrant]
+
+TASK [Install UFW] *************************************************************
+ok: [vagrant]
+
+TASK [start ufw] ***************************************************************
+changed: [vagrant]
+
+TASK [enable incoming ssh] *****************************************************
+changed: [vagrant]
+
+TASK [allow all outgoing traffic] **********************************************
+ok: [vagrant]
+
+TASK [deny all incoming traffic] ***********************************************
+ok: [vagrant]
+
+TASK [reload ufw] **************************************************************
+ok: [vagrant]
+
+PLAY RECAP *********************************************************************
+vagrant                    : ok=7    changed=2    unreachable=0    failed=0
+```
+
+We can see that seven tasks ran successfully (`ok=7`) and two resulted in
+changes. Since the default policy of UFW is to allow all outgoing traffic and
+deny all incoming traffic, these two tasks did not result in changes.
+
+If you run the playbook again, you should see that seven tasks run successfully
+but this time there are no changes.
