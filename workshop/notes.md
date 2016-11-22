@@ -239,10 +239,10 @@ exercises:
 git clone https://github.com/pwaring/configuration-management-ansible.git
 ```
 
-Then change into the `workshop/ex01` directory:
+Then change into the `workshop/exercises/ex01` directory:
 
 ```
-cd configuration-management-ansible/workshop/ex01
+cd configuration-management-ansible/workshop/exercises/ex01
 ```
 
 This directory contains an `ansible` directory and a file called `Vagrantfile`
@@ -351,3 +351,57 @@ virtual machines.
 
 Although there are many other options that you can specify in the inventory
 file, these are the only ones we will be using in the workshop.
+
+### Firewall playbook
+
+The first thing to do after creating a new server is to install a packet filter
+or firewall. Create a file called `security.yml` in `ex01/ansible` with the
+following content (the indentation is important):
+
+```
+# Security-related functionality, e.g. firewall installation and setup
+- name: Security playbook
+  hosts: vagrant
+  become_user: root
+```
+
+The first line is a comment, a concept which you will probably recognise from
+programming languages and shell scripts. Anything after the `#` symbol to the
+end of the line is ignored by Ansible, so you can add notes documenting parts
+of the playbook. Comments can be at the end of a line or a full line by
+themselves. There are no multi-line or block comments available in YAML.
+
+The second line is a name for the playbook. This will be printed to the console
+when you run the playbook, so it is a good idea to set this to a brief
+description of what the playbook does.
+
+The third line is the node on which the playbook will run. This can be set to an
+individual node, as is the case here, or a group.
+
+The final line tells Ansible to 'become' the `root` user when connecting to the
+node, as most of the tasks will require root privileges. By default, Vagrant
+images include a `vagrant` user which has `sudo` access without needing a
+password. In production systems you can choose to connect as a user with low
+privileges and then become root, or you can connect directly as the root user.
+If a password is required for either SSH or sudo, Ansible will prompt you for
+this information when you run the playbook.
+
+To run a playbook, use the `ansible-playbook` command with the name of the
+playbook as an argument (this must be run in the same directory as
+`ansible.cfg` otherwise Ansible will not pick up the settings in that file):
+
+```
+ansible-playbook security.yml
+```
+
+You should see the following output:
+
+```
+PLAY [Security playbook] *******************************************************
+
+TASK [setup] *******************************************************************
+ok: [vagrant]
+
+PLAY RECAP *********************************************************************
+vagrant                    : ok=1    changed=0    unreachable=0    failed=0 
+```
