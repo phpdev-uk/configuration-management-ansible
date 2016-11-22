@@ -362,6 +362,7 @@ following content (the indentation is important):
 # Security-related functionality, e.g. firewall installation and setup
 - name: Security playbook
   hosts: vagrant
+  become: yes
   become_user: root
 ```
 
@@ -378,13 +379,16 @@ description of what the playbook does.
 The third line is the node on which the playbook will run. This can be set to an
 individual node, as is the case here, or a group.
 
-The final line tells Ansible to 'become' the `root` user when connecting to the
-node, as most of the tasks will require root privileges. By default, Vagrant
-images include a `vagrant` user which has `sudo` access without needing a
-password. In production systems you can choose to connect as a user with low
-privileges and then become root, or you can connect directly as the root user.
-If a password is required for either SSH or sudo, Ansible will prompt you for
-this information when you run the playbook.
+The fourth and fifth lines tells Ansible to 'become' the `root` user when
+connecting to the node, as most of the tasks will require root
+privileges. `become_user` does not imply `become: yes`, so you need to include
+both.
+
+By default, Vagrant images include a `vagrant` user which has `sudo` access
+without needing a password. In production systems you can choose to connect as a
+user with low privileges and then become root, or you can connect directly as
+the root user. If a password is required for either SSH or sudo, Ansible will
+prompt you for this information when you run the playbook.
 
 To run a playbook, use the `ansible-playbook` command with the name of the
 playbook as an argument (this must be run in the same directory as
@@ -403,5 +407,85 @@ TASK [setup] *******************************************************************
 ok: [vagrant]
 
 PLAY RECAP *********************************************************************
-vagrant                    : ok=1    changed=0    unreachable=0    failed=0 
+vagrant                    : ok=1    changed=0    unreachable=0    failed=0
+```
+
+Let's look at each line in turn:
+
+ * `PLAY [Security playbook]`: Information about which playbook is being run,
+ taken from the `name` we specified at the top of the file.
+ * `TASK [setup]`: Ansible is collecting information about the node which it is
+ about to configure. This includes information such as which packages are
+ already installed on the node. If you are running an older version of Ansible,
+ you may see `GATHERING FACTS` instead of `TASK [setup]`.
+ * `PLAY RECAP`: Shows what has changed as a result of running this playbook,
+ and whether any tasks failed to run.
+
+The four values under `PLAY RECAP` are:
+
+ * `ok=1`: The number of tasks completed succcessfully. In this case we have
+ only executed one task, the pre-defined `setup`.
+ * `changed=0`: The number of tasks which resulted in a change being made.
+ Since the `setup` task makes no changes and we haven't defined any other tasks,
+ this is zero.
+ * `unreachable=0`: The number of nodes to which an SSH connection could not be
+ established. This should always be zero.
+ * `failed=0`: The number of tasks which failed. This should always be zero.
+
+Now that we have a basic playbook, let's install the firewall software. We will
+be using UFW, the Uncomplicated Firewall, which is an interface to the
+`iptables` and `ip6tables` packet filtering.
+
+Add the following lines to `security.yml`, underneath `become_user` and indented
+at the same level:
+
+```
+tasks:
+  - name: Install UFW
+    apt:
+      name: ufw
+```
+
+Let's look at each line in turn:
+
+ * `tasks:` The following list items (indicated by a `-` in YAML) are tasks,
+ the core of every playbook.
+ * `name:` The name of this task. As with the playbook name, this is printed to
+ the console when the task runs.
+ * `apt:` The name of the module (`apt` is a Core module).
+ * `name:` The name of the package. By default the `apt` module will ensure that
+ the package with this name is installed on the node.
+
+Now run the playbook:
+
+```
+ansible-playbook security.yml
+```
+
+You should see the following output:
+
+```
+PLAY [Security playbook] *******************************************************
+
+TASK [setup] *******************************************************************
+ok: [vagrant]
+
+TASK [Install UFW] *************************************************************
+ok: [vagrant]
+
+PLAY RECAP *********************************************************************
+vagrant                    : ok=2    changed=0    unreachable=0    failed=0
+```
+
+We've successfully run two tasks (`setup` and `Install UFW`) so Ansible now
+shows `ok=2`. Why is `changed=0` though? In this case, the Ubuntu image we are
+using already has the `ufw` package installed. Ansible has detected this as part
+of the `setup` task and has determined that no action needs to be taken.
+
+We can login to the virtual machine and verify that UFW is installed:
+
+```
+$ vagrant ssh
+vagrant@vagrant-ubuntu-trusty-64:~$ sudo ufw status
+Status: inactive
 ```
