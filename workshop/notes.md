@@ -669,4 +669,17 @@ Run the playbook and then visit [http://10.213.213.213](http://10.213.213.213)
 in a web browser. You should see a page which indicates that nginx is working.
 
 Now run the `security.yml` playbook in `ex02/ansible` and try visiting the page
-again.
+again. Your browser will not be able to connect, as the virtual machine is now
+blocking all incoming connections other than SSH. To fix this, we need to add
+two more tasks to the web playbook, immediately underneath and indented at the
+same level as the existing tasks:
+
+```
+- name: enable incoming http
+  ufw:
+    rule: allow
+    to_port: http
+- name: reload ufw
+  ufw:
+    state: reloaded
+```
