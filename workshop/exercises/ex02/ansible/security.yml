@@ -1,0 +1,29 @@
+# Security-related functionality, e.g. firewall installation and setup
+- name: Security playbook
+  hosts: vagrant
+  become: yes
+  become_user: root
+
+  tasks:
+    - name: Install UFW
+      apt:
+        name: ufw
+    - name: start ufw
+      ufw:
+        state: enabled
+    - name: enable incoming ssh
+      ufw:
+        rule: allow
+        to_port: ssh
+    - name: allow all outgoing traffic
+      ufw:
+        direction: outgoing
+        policy: allow
+    - name: deny all incoming traffic
+      ufw:
+        direction: incoming
+        policy: deny
+        log: yes
+    - name: reload ufw
+      ufw:
+        state: reloaded
