@@ -528,10 +528,11 @@ Hopefully the YAML is self-documenting, but here is what each task does:
  1. Deny and log all incoming traffic (default policy).
  1. Reload UFW so that the rules take effect.
 
-We add the permissive rules first, followed by the defaults. The order is
-important, because the first rule matched is used. If we placed the default
-'deny all incoming traffic' rule before the 'enable incoming ssh' rule,
-incoming SSH connections would be blocked.
+We add the permissive rules first, followed by the defaults. In firewalls the
+order is usually important, because the first rule matched is used. However,
+UFW permits incoming traffic if it matches an allow rule, regardless of where
+it is specified. This will be useful in the next exercise when we come to add
+a web server to our setup.
 
 Note that the UFW service will be reloaded even if Ansible has not made any
 changes to the rules. It is possible to reload services only if something has
@@ -596,13 +597,13 @@ allowed from anywhere, over IPv4 and IPv6. We can verify that the firewall is
 in place by using nmap to run a port scan against the virtual machine:
 
 ```
-sudo nmap -sS 192.0.2.25
+sudo nmap -sS 10.213.213.213
 ```
 
 The output should be similar to:
 
 ```
-Nmap scan report for 192.0.2.25
+Nmap scan report for 10.213.213.213
 Host is up (0.00056s latency).
 Not shown: 999 filtered ports
 PORT   STATE SERVICE
@@ -619,11 +620,11 @@ the incoming traffic on all ports other than SSH:
 vagrant@vagrant-ubuntu-trusty-64:~$ sudo tail -n 2 /var/log/syslog
 Nov 22 12:31:05 vagrant-ubuntu-trusty-64 kernel: [  156.774909] [UFW BLOCK]
 IN=eth1 OUT= MAC=08:00:27:cc:95:5c:0a:00:27:00:00:05:08:00 SRC=192.0.2.1
-DST=192.0.2.25 LEN=44 TOS=0x00 PREC=0x00 TTL=59 ID=9884 PROTO=TCP SPT=51556
+DST=10.213.213.213 LEN=44 TOS=0x00 PREC=0x00 TTL=59 ID=9884 PROTO=TCP SPT=51556
 DPT=554 WINDOW=1024 RES=0x00 SYN URGP=0
 Nov 22 12:31:05 vagrant-ubuntu-trusty-64 kernel: [  156.774923] [UFW BLOCK]
 IN=eth1 OUT= MAC=08:00:27:cc:95:5c:0a:00:27:00:00:05:08:00 SRC=192.0.2.1
-DST=192.0.2.25 LEN=44 TOS=0x00 PREC=0x00 TTL=43 ID=63657 PROTO=TCP SPT=51556
+DST=10.213.213.213 LEN=44 TOS=0x00 PREC=0x00 TTL=43 ID=63657 PROTO=TCP SPT=51556
 DPT=199 WINDOW=1024 RES=0x00 SYN URGP=0
 ```
 
@@ -633,3 +634,39 @@ the `ex01` directory to destroy the virtual machine and free up its resources:
 ```
 vagrant destroy -f
 ```
+
+## Adding a web server
+
+A basic virtual machine with a firewall still doesn't do a great deal, so we
+will expand on the previous exercise by adding a web server to our managed node.
+
+There are two things we need for a basic web server:
+
+ 1. Ensure the web server (in this case nginx) is installed and running.
+ 1. Allow incoming traffic on the HTTP port (80).
+
+First of all, create a new playbook, `web.yml` in the `ex02/ansible` directory
+and add the following content:
+
+```
+# Web server playbook
+- name: Web server playbook
+  hosts: vagrant
+  become: yes
+  become_user: root
+
+  tasks:
+    - name: install nginx
+      apt:
+        name: nginx
+    - name: ensure nginx is running
+      service:
+        name: nginx
+        state: started
+```
+
+Run the playbook and then visit [http://10.213.213.213](http://10.213.213.213)
+in a web browser. You should see a page which indicates that nginx is working.
+
+Now run the `security.yml` playbook in `ex02/ansible` and try visiting the page
+again.
