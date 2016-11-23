@@ -2,11 +2,6 @@ PDF_FILES = output/notes-print.pdf output/notes-screen.pdf output/requirements-p
 
 all: $(PDF_FILES)
 
-output/:
-	mkdir output
-
-$(PDF_FILES): output/
-
 output/%-print.pdf: %.md
 	filepp $< | pandoc -o $@
 
@@ -14,6 +9,6 @@ output/%-screen.pdf: %.md
 	filepp $< | pandoc -V mainfont=Ubuntu --latex-engine=xelatex -o $@
 
 clean:
-	rm -rf output/
+	rm -f output/*
 
 .PHONY: clean
