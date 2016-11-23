@@ -1,15 +1,14 @@
 all: pdf
 
-pdf: notes-print.pdf notes-screen.pdf requirements-print.pdf requirements-screen.pdf
+pdf: output/notes-print.pdf output/notes-screen.pdf output/requirements-print.pdf output/requirements-screen.pdf
 
-%-print.pdf: %.md
+output/%-print.pdf: %.md
 	filepp $< | pandoc -o $@
 
-%-screen.pdf: %.md
+output/%-screen.pdf: %.md
 	filepp $< | pandoc -V mainfont=Ubuntu --latex-engine=xelatex -o $@
 
 clean:
-	rm -rf *.pdf
-	rm -rf *.log
+	rm -f output/*
 
 .PHONY: clean

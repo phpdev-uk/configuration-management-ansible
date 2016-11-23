@@ -1,3 +1,2 @@
 .vagrant
-*.pdf
-*.log
+output/
