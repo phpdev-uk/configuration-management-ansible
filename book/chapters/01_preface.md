@@ -6,7 +6,7 @@
 
 ## Who is this book for?
 
-The intended audience for this book is system administators who are familiar
+The intended audience for this book is system administrators who are familiar
 with managing Linux machines but are new to configuration management or Ansible
 (or both).
 
