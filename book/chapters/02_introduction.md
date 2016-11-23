@@ -8,6 +8,10 @@
 
 #include "../common/about-ansible.md"
 
+### Requirements
+
+#include "../common/ansible-requirements.md"
+
 ## Alternatives
 
 #include "../common/about-alternatives.md"
