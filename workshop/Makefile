@@ -1,4 +1,6 @@
-all: notes-print.pdf notes-screen.pdf requirements-print.pdf requirements-screen.pdf
+all: pdf
+
+pdf: notes-print.pdf notes-screen.pdf requirements-print.pdf requirements-screen.pdf
 
 %-print.pdf: %.md
 	filepp $< | pandoc -o $@
