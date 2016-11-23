@@ -1,10 +1,10 @@
 all: notes-print.pdf notes-screen.pdf requirements-print.pdf requirements-screen.pdf
 
 %-print.pdf: %.md
-	pandoc $< -o $@
+	filepp $< | pandoc -o $@
 
 %-screen.pdf: %.md
-	pandoc -V mainfont=Ubuntu --latex-engine=xelatex $< -o $@
+	filepp $< | pandoc -V mainfont=Ubuntu --latex-engine=xelatex -o $@
 
 clean:
 	rm -rf *.pdf
