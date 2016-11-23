@@ -7,3 +7,7 @@
 ## Ansible
 
 #include "../common/about-ansible.md"
+
+## Alternatives
+
+#include "../common/about-alternatives.md"
