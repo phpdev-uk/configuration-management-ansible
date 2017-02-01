@@ -8,7 +8,7 @@ fontsize: 11pt
 ## Workshop requirements
 
 This document contains important information about the workshop, including
-minimum hardware requirements and software which should be installed prior to
+minimum hardware requirements and software which must be installed prior to
 arrival.
 
 You will also receive a copy of the notes by email two weeks before the
