@@ -114,7 +114,7 @@ Example:
 
 ```ini
 [defaults]
-hostfile = hosts
+inventory = hosts
 host_key_checking = False
 ```
 
