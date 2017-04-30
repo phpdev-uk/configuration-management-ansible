@@ -151,8 +151,8 @@ Ansible ships with two collections of modules: *Core* and *Extras*. Core modules
 will always be included with Ansible, whereas those in Extras may be separated
 in future releases. Popular modules in Extras may be promoted to Core over time.
 There is also an active community of developers who have written their own
-*Third Party* modules, and of course you can do the same (though doing so is
-beyond the scope of this workshop).
+*Third Party* modules, and of course you can do the same -- though doing so is
+beyond the scope of this workshop.
 
 Other than whether they are provided by default and how they are installed,
 you will use Core, Extras and Third Party modules in the same way. We will only
@@ -164,7 +164,7 @@ Our first server will be based on an Ubuntu image, on top of which we will
 install a firewall and configure it to allow all outgoing traffic and block all
 incoming traffic (except SSH).
 
-First of all, let's clone the Git repository which includes all of the workshop
+First of all, clone the Git repository which includes all of the workshop
 exercises:
 
 ```
@@ -200,6 +200,19 @@ vagrant up
 Whilst the VM is starting up, we will create the three basic files required to
 managed the node and install a basic firewall.
 
+--------------------------------------------------------------------------------
+**NOTE**
+
+You must run `vagrant up` from within the `exercises/ex01` directory. If not,
+you will receive a warning message:
+
+A Vagrant environment or target machine is required to run this
+command. Run `vagrant init` to create a new Vagrant environment. Or,
+get an ID of a target machine from `vagrant global-status` to run
+this command on. A final option is to change to a directory with a
+Vagrantfile and to try again.
+--------------------------------------------------------------------------------
+
 ### Configuration file
 
 The most basic configuration file tells Ansible where to find the inventory
@@ -224,7 +237,11 @@ to disable this functionality by adding one more line to `ansible.cfg`:
 host_key_checking = False
 ```
 
-Only use this option for testing, and **never** in production.
+--------------------------------------------------------------------------------
+**WARNING**
+
+Only set `host_key_checking` to `False` for testing, **never** in production.
+--------------------------------------------------------------------------------
 
 Your `ansible.cfg` should now contain the following:
 
@@ -284,6 +301,49 @@ virtual machines.
 Although there are many other options that you can specify in the inventory
 file, these are the only ones we will be using in the workshop.
 
+Test that the virtual machine is running and responsive by running the following
+command from within the `ansible` directory:
+
+```
+ansible all ping -m
+```
+
+The following output should be returned:
+
+```
+vagrant | SUCCESS => {
+    "changed": false,
+    "ping": "pong"
+}
+```
+
+If you receive the following output:
+
+```
+ansible_private_key_file=../.vagrant/machines/default/virtualbox/private_key
+    | UNREACHABLE! => {
+    "changed": false,
+    "msg": "Failed to connect to the host via ssh.",
+    "unreachable": true
+}
+vagrant | UNREACHABLE! => {
+    "changed": false,
+    "msg": "Failed to connect to the host via ssh.",
+    "unreachable": true
+}
+```
+
+You have a line break somewhere in your definition of the `vagrant` host in your
+inventory file.
+
+The following output means you have run the command outside the `ansible`
+directory:
+
+```
+[WARNING]: provided hosts list is empty, only localhost is available
+```
+
+
 ### Firewall playbook
 
 The first thing to do after creating a new server is to install a packet filter
@@ -298,7 +358,7 @@ following content (the indentation is important):
   become_user: root
 ```
 
-The first line is a comment, a concept which you will probably recognise from
+The first line is a comment, a concept which you may recognise from
 programming languages and shell scripts. Anything after the `#` symbol to the
 end of the line is ignored by Ansible, so you can add notes documenting parts
 of the playbook. Comments can be at the end of a line or a full line by
@@ -316,6 +376,14 @@ connecting to the node, as most of the tasks will require root
 privileges. `become_user` does not imply `become: yes`, so you need to include
 both.
 
+--------------------------------------------------------------------------------
+**NOTE**
+
+You may come across older playbooks and tutorials which use `sudo` instead of
+`become` and `become_user`. This syntax was deprecated in Ansible 1.9 and will
+result in a warning being displayed when the playbook is run.
+--------------------------------------------------------------------------------
+
 By default, Vagrant images include a `vagrant` user which has `sudo` access
 without needing a password. In production systems you can choose to connect as a
 user with low privileges and then become root, or you can connect directly as
@@ -323,8 +391,8 @@ the root user. If a password is required for either SSH or sudo, Ansible will
 prompt you for this information when you run the playbook.
 
 To run a playbook, use the `ansible-playbook` command with the name of the
-playbook as an argument (this must be run in the same directory as
-`ansible.cfg` otherwise Ansible will not pick up the settings in that file):
+playbook as an argument. This must be run in the same directory as
+`ansible.cfg` otherwise Ansible will not pick up the settings in that file:
 
 ```
 ansible-playbook security.yml
@@ -355,7 +423,7 @@ Let's look at each line in turn:
 
 The four values under `PLAY RECAP` are:
 
- * `ok=1`: The number of tasks completed succcessfully. In this case we have
+ * `ok=1`: The number of tasks completed successfully. In this case we have
  only executed one task, the pre-defined `setup`.
  * `changed=0`: The number of tasks which resulted in a change being made.
  Since the `setup` task makes no changes and we haven't defined any other tasks,
@@ -423,8 +491,8 @@ Status: inactive
 ```
 
 An inactive firewall with no filtering rules isn't very useful, so we'll add
-some tasks to the playbook (indented underneath `tasks` at the same level as
-the UFW installation lines):
+some tasks to the playbook, indented underneath `tasks` at the same level as
+the UFW installation lines:
 
 ```
 - name: start ufw
@@ -466,12 +534,16 @@ UFW permits incoming traffic if it matches an allow rule, regardless of where
 it is specified. This will be useful in the next exercise when we come to add
 a web server to our setup.
 
-Note that the UFW service will be reloaded even if Ansible has not made any
+--------------------------------------------------------------------------------
+**NOTE**
+
+The UFW service will be reloaded even if Ansible has not made any
 changes to the rules. It is possible to reload services only if something has
 changed by creating a special type of task called a *handler*, and then
 *notifying* the handler whenever something changes. It's easy to forget to do
-this though, so the simplest and least error-prone option is to always reload
-the service at the end of the playbook.
+this though, so for now we will always reload the service at the end of the
+playbook.
+--------------------------------------------------------------------------------
 
 Run the playbook again and you should see the following output:
 
@@ -510,8 +582,7 @@ deny all incoming traffic, these two tasks did not result in changes.
 If you run the playbook again, you should see that seven tasks run successfully
 but this time there are no changes.
 
-Let's login to the virtual machine to verify that the rules have been setup
-correctly:
+Login to the virtual machine to verify that the rules have been setup correctly:
 
 ```
 $ vagrant ssh
