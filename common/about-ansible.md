@@ -7,4 +7,4 @@ system administrators already using RHEL, CentOS and OpenStack.
 
 In case you were wondering, an ansible is a fictional machine for communicating
 over large distances. It was first coined in *Rocannon's World* by Ursula K. Le
-Guin, and is used by other science fiction novels.
+Guin, and is used in other science fiction novels.
