@@ -8,7 +8,7 @@ managed node.
 There is no requirement for the operating system on the control machine to match
 the nodes, so you can control Linux nodes from a macOS machine, Windows nodes
 from a Linux machine etc. However, running Ansible on Windows as a control
-machine is not supported.
+machine is not officially supported.
 
 No agent software needs to run on the nodes and there are no additional firewall
 rules required beyond allowing incoming SSH connections (you can restrict this

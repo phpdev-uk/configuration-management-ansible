@@ -82,7 +82,7 @@ push deployment is generally easier to get up and running.
 ## Number of nodes
 
 Ansible can manage anything from a single node up to thousands of nodes. For
-simplicity though we will still to a single node for most of the examples in
+simplicity though we will stick to a single node for most of the examples in
 this workshop.
 
 ## Ansible components
@@ -99,8 +99,8 @@ All other files used by Ansible (e.g. Apache configuration files) are stored in
 `ansible/files`.
 
 All Ansible files are plain text so you can use whichever editor you prefer. You
-can (and should!) also put the files into version control to keep a history of
-changes made.
+can, and should, put the files into version control to keep a history of changes
+made.
 
 ### Configuration file
 
@@ -123,7 +123,8 @@ host_key_checking = False
 **Filename:** `hosts`
 
 The inventory file lists all the managed nodes. To keep things simple, we will
-be using a single group which contains one node.
+be using a single group which contains one node. This file uses a list of
+key-value pairs separated by spaces.
 
 Example:
 
@@ -138,7 +139,7 @@ ansible_private_key_file=../.vagrant/machines/default/virtualbox/private_key
 **Filename:** `*.yml`
 
 Playbooks are the core of Ansible. They are written in YAML (Yet Another Markup
-Language) and describe a series of tasks to be performend on a node.
+Language) and describe a series of tasks to be performed on a node.
 
 ### Modules
 
