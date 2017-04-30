@@ -82,7 +82,7 @@ through [Homebrew](http://brew.sh/).
 
 #### Ansible
 
-  * **Minimum version:** 1.8
+  * **Minimum version:** 2.0
   * **Ubuntu package:** `ansible`
   * **Website:** [ansible.com](http://www.ansible.com/)
 
