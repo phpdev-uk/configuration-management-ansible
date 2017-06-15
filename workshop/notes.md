@@ -518,9 +518,7 @@ Hopefully the YAML is self-documenting, but here is what each task does:
 
  1. Ensure that the UFW service has started (`enabled`).
  1. Allow incoming SSH traffic (if a service is running on the default port,
-   you can specify it by name). Note that because the firewall is running inside
-   the virtual machine, it sees SSH on the default port, whereas from outside
-   the virtual machine we need to connect on port 2222.
+   you can specify it by name).
  1. Allow all outgoing traffic (default policy).
  1. Deny and log all incoming traffic (default policy).
  1. Reload UFW so that the rules take effect.
