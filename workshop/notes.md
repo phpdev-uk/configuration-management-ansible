@@ -436,7 +436,7 @@ be using UFW, the Uncomplicated Firewall, which is an interface to the
 Add the following lines to `security.yml`, underneath `become_user` and indented
 at the same level:
 
-```
+```yaml
 tasks:
   - name: Install UFW
     apt:
@@ -491,7 +491,7 @@ An inactive firewall with no filtering rules isn't very useful, so we'll add
 some tasks to the playbook, indented underneath `tasks` at the same level as
 the UFW installation lines:
 
-```
+```yaml
 - name: start ufw
   ufw:
     state: enabled
