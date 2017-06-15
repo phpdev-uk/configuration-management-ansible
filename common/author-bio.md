@@ -6,4 +6,4 @@ of Manchester, and was the IT Director and Technical Manager at a wholesale
 insurance broker.
 
 Paul can be contacted via email at [paul@xk7.net](mailto:paul@xk7.net) and has
-a website at [pwaring.com](https://www.pwaring.com).
+a website at [phpdeveloper.org.uk](https://www.phpdeveloper.org.uk).
