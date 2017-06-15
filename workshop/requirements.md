@@ -66,6 +66,9 @@ Most laptops purchased since 2012 should have this functionality, but if in
 doubt please contact the tutor who can check and help you enable hardware
 virtualisation, as it is sometimes disabled by default.
 
+As we will be using virtual machines for most of the exercises, your laptop will
+need at least 4GB of RAM, and ideally more.
+
 ### Software
 
 A recent version of a Linux distribution or macOS is required. The tutor will
