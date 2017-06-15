@@ -64,7 +64,7 @@ Sometimes nodes are referred to as *hosts*.
 Ansible can manage Linux, OS X and Windows nodes, thought to keep things simple
 we'll focus exclusively on Linux. We will also assume that the managed nodes are
 servers, although the majority of material applies to desktops as well (e.g. if
-you wanted to manage a cluster of machines in a teaching environment).
+you want to manage a cluster of machines in a teaching environment).
 
 ### Push deployment
 
@@ -181,15 +181,15 @@ This directory contains an `ansible` directory and a file called `Vagrantfile`
 with the following contents:
 
 ```ruby
-Vagrant.configure(2) do |config|
-  config.vm.box = "ubuntu/trusty64"
-end
+#include "exercises/ex01/Vagrantfile"
 ```
 
 This tells Vagrant to configure a virtual machine with the following options:
 
  * `config.vm.box`: The default image to use for the virtual machine, in this
  case a 64 bit Ubuntu Trusty 14.04 image which is maintained by the community.
+ * `config.vm.network`: Create a private network for this virtual machine, with
+ its own IP address.
 
 Start the virtual machine now by running:
 
@@ -261,7 +261,7 @@ following content. Everything from `vagrant` onwards must be on one line, there
 is only a break in the notes because of margin constraints.
 
 ```ini
-vagrant ansible_host=127.0.0.1 ansible_port=2222 ansible_user=vagrant
+vagrant ansible_host=10.213.213.213 ansible_user=vagrant
 ansible_private_key_file=../.vagrant/machines/default/virtualbox/private_key
 ```
 
@@ -274,14 +274,11 @@ the node, in this case `vagrant` (there is no requirement for the name used by
 Ansible to match the DNS hostname). After the name is a set of key-value pairs,
 which must all be on the same line as the name.
 
-Hopefully most of the names are self-explanatory, but here's a rundown of which
+Hopefully most of the names are self-explanatory, but here's a rundown of what
 each one does:
 
- * `ansible_host`: The hostname or IP address of the node. Since we're using
- Vagrant to run a virtual machine locally, the address is 127.0.0.1.
- * `ansible_port`: The port to use for SSH connections. This is optional and
- defaults to port 22, but Vagrant uses a non-standard port for SSH (usually
- 2222 for the first virtual machine).
+ * `ansible_host`: The hostname or IP address of the node. In this case we're
+ using the IP address which we specified in Vagrant.
  * `ansible_user`: The username for SSH connections. Vagrant defaults to a user
  called `vagrant` which has `sudo` access without the need for a password.
  * `ansible_private_key_file`: The path to the private key used for SSH
@@ -350,7 +347,7 @@ The first thing to do after creating a new server is to install a packet filter
 or firewall. Create a file called `security.yml` in `ex01/ansible` with the
 following content (the indentation is important):
 
-```
+```yaml
 # Security-related functionality, e.g. firewall installation and setup
 - name: Security playbook
   hosts: vagrant
