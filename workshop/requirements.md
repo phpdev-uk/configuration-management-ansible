@@ -69,7 +69,7 @@ virtualisation, as it is sometimes disabled by default.
 ### Software
 
 A recent version of a Linux distribution or macOS is required. The tutor will
-be using Ubuntu 16.10 (Yakkety Yak).
+be using Ubuntu 17.04 (Zesty Zapus).
 
 The following software should be installed before the workshop. Package names
 have been supplied for Ubuntu but are likely to be similar on other
