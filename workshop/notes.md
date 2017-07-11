@@ -279,7 +279,7 @@ Hopefully most of the names are self-explanatory, but here's a rundown of what
 each one does:
 
  * `ansible_host`: The hostname or IP address of the node. In this case we're
- using the IP address which we specified in Vagrant.
+ using the IP address which we specified in `Vagrantfile`.
  * `ansible_user`: The username for SSH connections. Vagrant defaults to a user
  called `vagrant` which has `sudo` access without the need for a password.
  * `ansible_private_key_file`: The path to the private key used for SSH
