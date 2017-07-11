@@ -442,6 +442,7 @@ tasks:
   - name: Install UFW
     apt:
       name: ufw
+      state: present
 ```
 
 Let's look at each line in turn:
@@ -451,8 +452,9 @@ Let's look at each line in turn:
  * `name:` The name of this task. As with the playbook name, this is printed to
  the console when the task runs.
  * `apt:` The name of the module (`apt` is a Core module).
- * `name:` The name of the package. By default the `apt` module will ensure that
- the package with this name is installed on the node.
+ * `name:` The name of the package.
+ * `state:` The state of the package after running this task. `present` means
+ that the package must be installed.
 
 Now run the playbook:
 
