@@ -1,7 +1,7 @@
 ---
 title: Configuration Management with Ansible
 author: Paul Waring
-geometry: margin=2.5cm
+geometry: margin=2cm,vmargin=2.5cm
 papersize: a4
 fontfamily: palatino
 ---
