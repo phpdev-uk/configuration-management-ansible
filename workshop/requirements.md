@@ -68,7 +68,8 @@ doubt please contact the tutor who can check and help you enable hardware
 virtualisation, as it is sometimes disabled by default.
 
 As we will be using virtual machines for most of the exercises, your laptop will
-need at least 4GB of RAM, and ideally more.
+need at least 4GB of RAM, and ideally more. A solid-state drive (SSD) as the
+main hard drive will also help virtual machines to boot as quickly as possible.
 
 ### Software
 
