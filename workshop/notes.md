@@ -646,8 +646,10 @@ There are two things we need for a basic web server:
  1. Ensure the web server (in this case nginx) is installed and running.
  1. Allow incoming traffic on the HTTP port (80).
 
-First of all, create a new playbook, `web.yml` in the `ex02/ansible` directory
-and add the following content:
+Change into the `workshop/exercises/ex02` directory and run `vagrant up`.
+
+Create a new playbook, `web.yml` in the `ex02/ansible` directory and add the
+following content:
 
 ```
 # Web server playbook
@@ -660,6 +662,7 @@ and add the following content:
     - name: install nginx
       apt:
         name: nginx
+        state: present
     - name: ensure nginx is running
       service:
         name: nginx
