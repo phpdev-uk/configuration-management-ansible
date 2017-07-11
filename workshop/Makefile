@@ -1,13 +1,10 @@
-PDF_FILES = output/notes-print.pdf output/notes-screen.pdf output/requirements-print.pdf output/requirements-screen.pdf
+PDF_FILES = output/notes.pdf output/requirements.pdf
 COMMON = ../common/*.md
 
 all: $(PDF_FILES)
 
-output/%-print.pdf: %.md $(COMMON)
+output/%.pdf: %.md $(COMMON)
 	filepp $< | pandoc -o $@
-
-output/%-screen.pdf: %.md $(COMMON)
-	filepp $< | pandoc -V mainfont=Ubuntu --latex-engine=xelatex -o $@
 
 clean:
 	rm -f output/*
