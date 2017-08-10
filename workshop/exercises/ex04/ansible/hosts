@@ -1,1 +1,1 @@
-vagrant ansible_host=10.214.214.214 ansible_user=vagrant ansible_private_key_file=../.vagrant/machines/default/virtualbox/private_key ansible_ssh_extra_args='-o StrictHostKeyChecking=no'
+vagrant ansible_host=10.214.214.214 ansible_user=vagrant ansible_private_key_file=../.vagrant/machines/default/virtualbox/private_key ansible_ssh_extra_args='-o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null'
