@@ -89,7 +89,7 @@ through [Homebrew](http://brew.sh/).
 
   * **Minimum version:** 2.0
   * **Ubuntu package:** `ansible`
-  * **Website:** [ansible.com](http://www.ansible.com/)
+  * **Website:** [ansible.com](https://www.ansible.com/)
 
 #### Git
 
