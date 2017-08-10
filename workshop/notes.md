@@ -56,24 +56,24 @@ covering orchestration in this workshop.
 Ansible divides machines into two categories:
 
 *Control machine:* The machine which the Ansible client runs on. For the
-purposes of the workshop, this will be your laptop.
+purposes of the workshop, the control machine will be your laptop.
 
 *Managed node:* The machine which will have its configuration managed by
-Ansible. In the workshop, this will be a virtual machine running on your laptop.
-Sometimes nodes are referred to as *hosts*.
+Ansible. In the workshop, the managed node will be a virtual machine running on
+your laptop. Sometimes nodes are referred to as *hosts*.
 
-Ansible can manage Linux, OS X and Windows nodes, thought to keep things simple
+Ansible can manage Linux, macOS and Windows nodes, though to keep things simple
 we'll focus exclusively on Linux. We will also assume that the managed nodes are
 servers, although the majority of material applies to desktops as well (e.g. if
 you want to manage a cluster of machines in a teaching environment).
 
 ### Push deployment
 
-Ansible uses *push deployment*, which means that changes are only deployed when
-you run the relevant command on the control machine (usually this will be
-`ansible-playbook`). The alternative mechanism, used by Puppet and Chef, is
-*pull deployment*, whereby nodes regularly check for configuration updates and
-apply them. There are advantages and disadvantages to both approaches, but
+Ansible uses *push deployment* by default, which means that changes are only
+deployed when you run the relevant command on the control machine (usually this
+will be `ansible-playbook`). The alternative mechanism, used by Puppet and Chef,
+is *pull deployment*, whereby nodes regularly check for configuration updates
+and apply them. There are advantages and disadvantages to both approaches, but
 push deployment is generally easier to get up and running.
 
 ## Ansible requirements
@@ -96,7 +96,7 @@ Ansible is split into several components:
  * Modules
 
 As a convention, we place all Ansible files in a subdirectory named `ansible`.
-All other files used by Ansible (e.g. Apache configuration files) are stored in
+All other files used by Ansible (e.g. configuration files) are stored in
 `ansible/files`.
 
 All Ansible files are plain text so you can use whichever editor you prefer. You
@@ -286,7 +286,18 @@ each one does:
  connections. This defaults to `~/.ssh/id_rsa`, but we need to provide a
  specific value for Vagrant.
 
-**Note:** If you are running Debian, or any other distribution with a version of
+--------------------------------------------------------------------------------
+**NOTE**
+
+In previous versions of Ansible, the above variables had `ssh` in their names,
+e.g. `ansible_ssh_host`. This is deprecated as of Ansible 2.0 and the shorter
+versions should be used.
+--------------------------------------------------------------------------------
+
+--------------------------------------------------------------------------------
+**NOTE**
+
+If you are running Debian Jessie, or any other distribution with a version of
 Vagrant earlier than 1.7, you will need to set `ansible_private_key_file` to:
 
 ```
@@ -295,6 +306,8 @@ Vagrant earlier than 1.7, you will need to set `ansible_private_key_file` to:
 
 This is because before version 1.7, Vagrant used the same private key for all
 virtual machines.
+--------------------------------------------------------------------------------
+
 
 Although there are many other options that you can specify in the inventory
 file, these are the only ones we will be using in the workshop.
@@ -595,7 +608,8 @@ To                         Action      From
 
 We can see that the UFW service is active and incoming SSH connections are
 allowed from anywhere, over IPv4 and IPv6. We can verify that the firewall is
-in place by using nmap to run a port scan against the virtual machine:
+in place by using nmap to run a port scan against the virtual machine (from
+your laptop):
 
 ```
 sudo nmap -sS 10.213.213.213
