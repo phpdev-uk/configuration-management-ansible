@@ -683,6 +683,13 @@ following content:
         state: started
 ```
 
+As well as the `apt` module, which we've already seen, we're introducing the
+`service` module (Core) with the following options:
+
+ * `name:` The name of the service.
+ * `state:` The state of the service after running this task. `started` means
+that the service must be running.
+
 Run the playbook and then visit [http://10.213.213.213](http://10.213.213.213)
 in a web browser. You should see a page which indicates that nginx is working.
 
