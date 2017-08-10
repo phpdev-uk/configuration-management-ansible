@@ -804,3 +804,37 @@ be created, with the same permissions.
     name: nginx
     state: reloaded
 ```
+
+Open `http://10.213.213.213:81` in your browser and you should see a Hello World
+page.
+
+## Variables
+
+So far we have set up a basic server but hardcoded all of our values (e.g. paths).
+Fortunately Ansible allows us to declare variables and then use them throughout
+the playbook.
+
+Variables can be declared at the top of a playbook using the `vars` section:
+
+```yaml
+vars:
+  website_path: /var/www/html
+```
+
+Variables can be used within a playbook using the `{{ var_name }}` syntax, e.g.
+
+```yaml
+copy:
+  src: files/index.html
+  dest: "{{ website_path }}/index.html"
+```
+
+We have already seen an example of lists in the `tasks` section. We can also
+create list variables:
+
+```yaml
+vars:
+  install_packages:
+    - nginx
+    - php-fpm
+```
