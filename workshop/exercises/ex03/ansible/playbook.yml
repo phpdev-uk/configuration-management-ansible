@@ -5,4 +5,7 @@
   become_user: root
 
   tasks:
-    - ping:
+    - name: Install nginx
+      apt:
+        name: nginx
+        state: present
