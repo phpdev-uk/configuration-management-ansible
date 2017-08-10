@@ -95,7 +95,7 @@ through [Homebrew](http://brew.sh/).
 
   * **Minimum version:** 1.8
   * **Ubuntu package:** `git`
-  * **Website:** [git-scm.com](http://git-scm.com/)
+  * **Website:** [git-scm.com](https://git-scm.com/)
 
 #### VirtualBox
 
