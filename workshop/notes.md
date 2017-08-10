@@ -708,3 +708,99 @@ same level as the existing tasks:
   ufw:
     state: reloaded
 ```
+
+Run the `web.yml` playbook again and access to nginx should be restored.
+
+## Single playbook
+
+Although splitting out tasks into separate playbooks might seem sensible, as it
+keeps different services separate, this is a bad idea for two reasons:
+
+ 1. It's easy to forget to run one playbook, or run them in the wrong order.
+ 1. Different services are likely to have dependencies on one another. For
+ example, every service needs to add firewall rules - should these go in the
+ service playbook or the security playbook?
+
+From now on we will only use one playbook per managed node. Later we will
+introduce the concept of *roles*, which allow you to create generic server
+templates which can then be overridden on a per-server or per-group basis.
+
+## Configuration files
+
+Until now we've installed software and handled its configuration entirely
+through playbooks. This is fine for simple changes, such as whether a package
+is installed, a service is running etc. but it becomes messy if we want to
+specify a large number of configuration options. Furthermore, it requires a
+working knowledge of Ansible in order to configure a service, whereas in larger
+teams you may have one person who is responsible for the server estate and
+another who sets up individual pieces of software such as nginx. Not all
+software has an Ansible module, and writing your own can be time-consuming.
+
+What we really need at this point is the ability to copy existing configuration
+files to a server, using Ansible. Fortunately, Ansible ships with a wide range
+of Core modules for manipulating files.
+
+Our test example will be adding a new virtual host to nginx. Enter the `ex03`
+directory and run `vagrant up`.
+
+Within the `ansible` directory, open `playbook.yml` and add this task below the
+one which installs nginx:
+
+```yaml
+- name: create directory for new virtual host
+  file:
+    path: /var/www/html
+    state: directory
+    mode: 0755
+    owner: root
+    group: root
+```
+
+Let's go through the following line by line:
+
+ * `file`: We are using the `file` module (Core).
+ * `path`: Full path to the target.
+ * `state`: The type of file to create. There are 6 options, but the two most
+ common ones are `file` and `directory`.
+ * `mode`: File permissions, either as octal (`0755`) or symbolic (`u=rwx,g=rx,o=rx`).
+ * `owner`: Owner of the file/directory.
+ * `group`: Group of the file/directory.
+
+--------------------------------------------------------------------------------
+**NOTE**
+
+If the directory specified in `path` does not exist, Ansible will create it and
+all parent directories. In our example both `/var/www` and `/var/www/html` will
+be created, with the same permissions.
+--------------------------------------------------------------------------------
+
+```yaml
+- name: copy index.html file
+  copy:
+    src: files/index.html
+    dest: /var/www/html/index.html
+    mode: 0644
+    owner: root
+    group: root
+```
+
+```yaml
+- name: copy nginx-81 file
+  copy:
+    src: files/nginx-81
+    dest: /etc/nginx/sites-available/nginx-81
+    mode: 0644
+    owner: root
+    group: root
+
+- name: symlink nginx-81
+  file:
+    state: link
+    src: /etc/nginx/sites-available/nginx-81
+    dest: /etc/nginx/sites-enabled/nginx-81
+
+- name: reload nginx
+  service:
+    name: nginx
+    state: reloaded
+```
