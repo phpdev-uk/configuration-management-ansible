@@ -651,7 +651,7 @@ Change into the `workshop/exercises/ex02` directory and run `vagrant up`.
 Create a new playbook, `web.yml` in the `ex02/ansible` directory and add the
 following content:
 
-```
+```yaml
 # Web server playbook
 - name: Web server playbook
   hosts: vagrant
@@ -678,7 +678,7 @@ blocking all incoming connections other than SSH. To fix this, we need to add
 two more tasks to the web playbook, immediately underneath and indented at the
 same level as the existing tasks:
 
-```
+```yaml
 - name: enable incoming http
   ufw:
     rule: allow
