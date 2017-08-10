@@ -10,7 +10,11 @@
       - nginx
       - php-fpm
 
+  gather_facts: no
+
   tasks:
+    - raw: apt-get install -y python
+    - setup:
     - name: install required packages
       with_items: "{{ install_packages }}"
       apt:
