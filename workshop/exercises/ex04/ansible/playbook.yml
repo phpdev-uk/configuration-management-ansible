@@ -11,10 +11,10 @@
       - php-fpm
 
   tasks:
-    - name: Install nginx
+    - name: install required packages
+      with_items: "{{ install_packages }}"
       apt:
-        name: nginx
-        state: present
+        name: "{{ item }}"
 
     - name: create directory for new virtual host
       file:
