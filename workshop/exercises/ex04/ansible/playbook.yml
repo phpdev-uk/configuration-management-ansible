@@ -1,0 +1,52 @@
+# Exercise 03 playbook
+- name: Exercise 03 playbook
+  hosts: vagrant
+  become: yes
+  become_user: root
+
+  vars:
+    document_root: /var/www/html
+    install_packages:
+      - nginx
+      - php-fpm
+
+  tasks:
+    - name: Install nginx
+      apt:
+        name: nginx
+        state: present
+
+    - name: create directory for new virtual host
+      file:
+        path: "{{ document_root }}"
+        state: directory
+        mode: 0755
+        owner: root
+        group: root
+
+    - name: copy index.php file
+      copy:
+        src: files/index.php
+        dest: "{{ document_root }}/index.php"
+        mode: 0644
+        owner: root
+        group: root
+
+    - name: copy nginx-81 file
+      copy:
+        src: files/nginx-81
+        dest: /etc/nginx/sites-available/nginx-81
+        mode: 0644
+        owner: root
+        group: root
+
+    - name: symlink nginx-81
+      file:
+        state: link
+        src: /etc/nginx/sites-available/nginx-81
+        dest: /etc/nginx/sites-enabled/nginx-81
+
+    - name: reload nginx
+      service:
+        name: nginx
+        state: reloaded
