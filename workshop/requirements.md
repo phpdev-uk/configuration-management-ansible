@@ -111,6 +111,10 @@ through [Homebrew](http://brew.sh/).
 
 #### Python
 
+* **Minimum version:** 2.7
+* **Ubuntu package:** `python`
+* **Website:** [python.org](https://www.python.org/)
+
 macOS and most Linux distributions come with a recent version of Python 2
 installed by default.
 
