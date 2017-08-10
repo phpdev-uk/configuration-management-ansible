@@ -1,5 +1,5 @@
-# Exercise 03 playbook
-- name: Exercise 03 playbook
+# Exercise 04 playbook
+- name: Exercise 04 playbook
   hosts: vagrant
   become: yes
   become_user: root
