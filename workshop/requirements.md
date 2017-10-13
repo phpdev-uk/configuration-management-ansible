@@ -85,6 +85,9 @@ Attendees with a macOS laptop can visit the websites listed for each piece
 of software, where downloads are available. Some software is also available
 through [Homebrew](http://brew.sh/).
 
+All the required software, with the exception of VirtualBox, supports the
+`--version` command line option to print the current version.
+
 #### Ansible
 
   * **Minimum version:** 2.0
