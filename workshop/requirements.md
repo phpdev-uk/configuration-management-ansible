@@ -74,7 +74,7 @@ main hard drive will also help virtual machines to boot as quickly as possible.
 ### Software
 
 A recent version of a Linux distribution or macOS is required. The tutor will
-be using Ubuntu 17.04 (Zesty Zapus).
+be using Ubuntu 17.04 (Zesty Zapus). Windows is **not** supported.
 
 The following software should be installed before the workshop. Package names
 have been supplied for Ubuntu but are likely to be similar on other
