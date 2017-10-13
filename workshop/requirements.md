@@ -118,4 +118,5 @@ through [Homebrew](http://brew.sh/).
 macOS and most Linux distributions come with a recent version of Python 2
 installed by default.
 
-Ansible only supports Python 2.
+Ansible only supports Python 2 (Python 3 support is under development but is
+unlikely to be widespread for some time).
