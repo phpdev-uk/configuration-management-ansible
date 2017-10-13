@@ -40,17 +40,21 @@ following commands:
 git clone https://github.com/pwaring/configuration-management-ansible.git
 cd configuration-management-ansible/workshop/exercises/ex00
 vagrant up
-cd ansible
-ansible testing -m ping
 ```
 
-You should see the following output:
+The last few lines of output should be:
 
 ```
-vagrant | SUCCESS => {
-    "changed": false,
-    "ping": "pong"
-}
+==> default: Running provisioner: ansible...
+    default: Running ansible-playbook...
+
+PLAY [all] *********************************************************************
+
+TASK [setup] *******************************************************************
+ok: [default]
+
+PLAY RECAP *********************************************************************
+default                    : ok=1    changed=0    unreachable=0    failed=0
 ```
 
 Make sure you destroy the VM afterwards by running the following command in
