@@ -215,17 +215,16 @@ this command on. A final option is to change to a directory with a
 Vagrantfile and to try again.
 --------------------------------------------------------------------------------
 
-
 ### Firewall playbook
 
 The first thing to do after creating a new server is to install a packet filter
-or firewall. Create a file called `security.yml` in `ex01/ansible` with the
+or firewall. Create a file called `playbook.yml` in `ex01` with the
 following content (the indentation is important):
 
 ```yaml
 # Security-related functionality, e.g. firewall installation and setup
 - name: Security playbook
-  hosts: vagrant
+  hosts: all
   become: yes
   become_user: root
 ```
@@ -241,7 +240,8 @@ when you run the playbook, so it is a good idea to set this to a brief
 description of what the playbook does.
 
 The third line is the node on which the playbook will run. This can be set to an
-individual node, as is the case here, or a group.
+individual node or a group. Here we have used the special group `all`, which
+corresponds to all the hosts available to Ansible.
 
 The fourth and fifth lines tells Ansible to 'become' the `root` user when
 connecting to the node, as most of the tasks will require root
@@ -262,13 +262,8 @@ user with low privileges and then become root, or you can connect directly as
 the root user. If a password is required for either SSH or sudo, Ansible will
 prompt you for this information when you run the playbook.
 
-To run a playbook, use the `ansible-playbook` command with the name of the
-playbook as an argument. This must be run in the same directory as
-`ansible.cfg` otherwise Ansible will not pick up the settings in that file:
-
-```
-ansible-playbook security.yml
-```
+Run `vagrant up` now to start the virtual machine. Vagrant will automatically
+call Ansible to provision the node at the end of the process.
 
 You should see the following output:
 
@@ -308,7 +303,7 @@ Now that we have a basic playbook, let's install the firewall software. We will
 be using UFW, the Uncomplicated Firewall, which is an interface to the
 `iptables` and `ip6tables` packet filtering.
 
-Add the following lines to `security.yml`, underneath `become_user` and indented
+Add the following lines to `playbook.yml`, underneath `become_user` and indented
 at the same level:
 
 ```yaml
@@ -333,7 +328,7 @@ Let's look at each line in turn:
 Now run the playbook:
 
 ```
-ansible-playbook security.yml
+vagrant provision
 ```
 
 You should see the following output:
@@ -372,19 +367,23 @@ the UFW installation lines:
 - name: start ufw
   ufw:
     state: enabled
+
 - name: enable incoming ssh
   ufw:
     rule: allow
     to_port: ssh
+
 - name: allow all outgoing traffic
   ufw:
     direction: outgoing
     policy: allow
+
 - name: deny all incoming traffic
   ufw:
     direction: incoming
     policy: deny
     log: yes
+
 - name: reload ufw
   ufw:
     state: reloaded
@@ -417,31 +416,32 @@ this though, so for now we will always reload the service at the end of the
 playbook.
 --------------------------------------------------------------------------------
 
-Run the playbook again and you should see the following output:
+Run the playbook again using `vagrant provision` and you should see the following
+output:
 
 ```
 PLAY [Security playbook] *******************************************************
 
 TASK [setup] *******************************************************************
-ok: [vagrant]
+ok: [default]
 
 TASK [Install UFW] *************************************************************
-ok: [vagrant]
+ok: [default]
 
 TASK [start ufw] ***************************************************************
-changed: [vagrant]
+changed: [default]
 
 TASK [enable incoming ssh] *****************************************************
-changed: [vagrant]
+changed: [default]
 
 TASK [allow all outgoing traffic] **********************************************
-ok: [vagrant]
+ok: [default]
 
 TASK [deny all incoming traffic] ***********************************************
-ok: [vagrant]
+ok: [default]
 
 TASK [reload ufw] **************************************************************
-ok: [vagrant]
+ok: [default]
 
 PLAY RECAP *********************************************************************
 vagrant                    : ok=7    changed=2    unreachable=0    failed=0
@@ -521,19 +521,16 @@ There are two things we need for a basic web server:
  1. Ensure the web server (in this case nginx) is installed and running.
  1. Allow incoming traffic on the HTTP port (80).
 
-Change into the `workshop/exercises/ex02` directory and run `vagrant up`.
+Change into the `workshop/exercises/ex02` directory copy the `playbook.yml`
+file from the previous exercise:
 
-Create a new playbook, `web.yml` in the `ex02/ansible` directory and add the
-following content:
+```
+cp ../ex01/playbook.yml .
+```
+
+Add the following content to `playbook.yml` under the existing tasks:
 
 ```yaml
-# Web server playbook
-- name: Web server playbook
-  hosts: vagrant
-  become: yes
-  become_user: root
-
-  tasks:
     - name: install nginx
       apt:
         name: nginx
