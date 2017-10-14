@@ -1,6 +1,6 @@
 # Exercise 03 playbook
 - name: Exercise 03 playbook
-  hosts: vagrant
+  hosts: all
   become: yes
   become_user: root
 
