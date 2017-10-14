@@ -1,6 +1,6 @@
 Although we will be focusing on Ansible, it is worth spending a few minutes
 looking at some of the popular alternatives. Examples which you may have heard
-of include CfEngine, Puppet and Chef.
+of include CfEngine, Puppet, Chef and Salt.
 
 Puppet and Chef both have a strong Ruby background and focus more on declaring
 on how a server should look after configuration management has been applied,
