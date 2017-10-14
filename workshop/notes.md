@@ -548,14 +548,12 @@ As well as the `apt` module, which we've already seen, we're introducing the
  * `state:` The state of the service after running this task. `started` means
 that the service must be running.
 
-Run the playbook and then visit [http://10.213.213.213](http://10.213.213.213)
-in a web browser. You should see a page which indicates that nginx is working.
-
-Now run the `security.yml` playbook in `ex02/ansible` and try visiting the page
-again. Your browser will not be able to connect, as the virtual machine is now
-blocking all incoming connections other than SSH. To fix this, we need to add
-two more tasks to the web playbook, immediately underneath and indented at the
-same level as the existing tasks:
+Run `vagrant up` and Ansible will configure UFW and then install nginx.
+However, if you try to visit [http://10.213.213.213](http://10.213.213.213) in
+a web browser, your connection will time out as UFW is blocking all incoming
+connections other than SSH. To fix this, we need to add two more tasks to the
+playbook, immediately underneath and indented at the same level as the existing
+tasks:
 
 ```yaml
 - name: enable incoming http
@@ -567,7 +565,8 @@ same level as the existing tasks:
     state: reloaded
 ```
 
-Run the `web.yml` playbook again and access to nginx should be restored.
+Run `vagrant provision` and then visit [http://10.213.213.213](http://10.213.213.213)
+in a web browser. You should see a page which indicates that nginx is working.
 
 ## Single playbook
 
