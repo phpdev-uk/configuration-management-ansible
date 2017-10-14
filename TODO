@@ -1,3 +1,5 @@
 TODO
 
  * Write Packer file to build VM images for use in workshop/book
+ * Rewrite exercises to use a single playbook
+ * Rewrite exercises to use Vagrant's built-in provisioner
