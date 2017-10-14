@@ -7,4 +7,4 @@ https://creativecommons.org/licenses/by-nc-nd/4.0/legalcode
 
 If you would like to use this work under a different licence, e.g. to deliver
 the workshop for commercial purposes (including in-house delivery), please
-contact the author for a quotation.
+contact the author for licensing options.
