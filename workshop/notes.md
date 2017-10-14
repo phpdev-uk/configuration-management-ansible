@@ -578,7 +578,7 @@ keeps different services separate, this is a bad idea for two reasons:
  example, every service needs to add firewall rules - should these go in the
  service playbook or the security playbook?
 
-From now on we will only use one playbook per managed node. Later we will
+This is why we have used one playbook per managed node. Later we will
 introduce the concept of *roles*, which allow you to create generic server
 templates which can then be overridden on a per-server or per-group basis.
 
