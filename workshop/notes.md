@@ -190,6 +190,8 @@ This tells Vagrant to configure a virtual machine with the following options:
  case a 64 bit Ubuntu Trusty 14.04 image which is maintained by the community.
  * `config.vm.network`: Create a private network for this virtual machine, with
  its own IP address.
+ * `config.vm.provision`: Provision this virtual machine using Vagrant's built-in
+ Ansible support.
 
 Start the virtual machine now by running:
 
