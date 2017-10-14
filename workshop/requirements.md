@@ -104,6 +104,12 @@ All the required software, with the exception of VirtualBox, supports the
   * **Ubuntu package:** `git`
   * **Website:** [git-scm.com](https://git-scm.com/)
 
+#### Nmap
+
+  * **Minimum version:** 7.3
+  * **Ubuntu package:** `nmap`
+  * **Website:** [nmap.org](https://nmap.org/)
+
 #### VirtualBox
 
   * **Minimum version:** 4.3
