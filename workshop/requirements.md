@@ -17,7 +17,7 @@ workshop, and a printed copy on the day of the workshop.
 
 If you have any technical questions about the workshop, or there are any
 particular areas which you would like us to spend more time on, please let the
-tutor know via email: [paul@xk7.net](mailto:paul@xk7.net).
+tutor know via email: [paul@phpdeveloper.org.uk](mailto:paul@phpdeveloper.org.uk).
 
 ## Knowledge
 

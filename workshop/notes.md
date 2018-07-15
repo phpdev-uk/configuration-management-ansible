@@ -14,7 +14,7 @@ standalone resource.
 
 If you are attending the workshop, you are welcome to read the notes beforehand
 and send any questions or comments to the tutor at:
-[paul@xk7.net](mailto:paul@xk7.net)
+[paul@phpdeveloper.org.uk](mailto:paul@phpdeveloper.org.uk)
 
 ## The tutor
 
