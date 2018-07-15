@@ -3,12 +3,14 @@ managed node.
 
 **Control machine:** macOS or Linux, Python 2.6 or 2.7.
 
-**Managed nodes:** Python 2.4 (with *simplejson*), 2.5, 2.6, 2.7; SSH service.
+**Managed nodes:** Python 2.4 (with *simplejson*), >=2.5, >=3.5; SSH service.
 
 There is no requirement for the operating system on the control machine to match
 the nodes, so you can control Linux nodes from a macOS machine, Windows nodes
 from a Linux machine etc. However, running Ansible on Windows as a control
 machine is not officially supported.
+
+Python 3 support is only available from Ansible 2.5 onwards.
 
 No agent software needs to run on the nodes and there are no additional firewall
 rules required beyond allowing incoming SSH connections (you can restrict this
