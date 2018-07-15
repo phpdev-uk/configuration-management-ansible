@@ -9,3 +9,5 @@
       apt:
         name: nginx
         state: present
+
+    - include: tasks.yml
