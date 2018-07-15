@@ -327,7 +327,7 @@ You should see the following output:
 ```
 PLAY [Security playbook] *******************************************************
 
-TASK [setup] *******************************************************************
+TASK [Gathering Facts] *********************************************************
 ok: [vagrant]
 
 TASK [Install UFW] *************************************************************
@@ -337,16 +337,16 @@ PLAY RECAP *********************************************************************
 vagrant                    : ok=2    changed=0    unreachable=0    failed=0
 ```
 
-We've successfully run two tasks (`setup` and `Install UFW`) so Ansible now
+We've successfully run two tasks (`Gathering Facts` and `Install UFW`) so Ansible now
 shows `ok=2`. Why is `changed=0` though? In this case, the Ubuntu image we are
 using already has the `ufw` package installed. Ansible has detected this as part
-of the `setup` task and has determined that no action needs to be taken.
+of the `Gathering Facts` task and has determined that no action needs to be taken.
 
 We can login to the virtual machine and verify that UFW is installed:
 
 ```
 $ vagrant ssh
-vagrant@vagrant-ubuntu-trusty-64:~$ sudo ufw status
+vagrant@ubuntu-xenial:~$  sudo ufw status
 Status: inactive
 ```
 
@@ -413,7 +413,7 @@ output:
 ```
 PLAY [Security playbook] *******************************************************
 
-TASK [setup] *******************************************************************
+TASK [Gathering Facts] *********************************************************
 ok: [default]
 
 TASK [Install UFW] *************************************************************
@@ -435,26 +435,26 @@ TASK [reload ufw] **************************************************************
 ok: [default]
 
 PLAY RECAP *********************************************************************
-vagrant                    : ok=7    changed=2    unreachable=0    failed=0
+default                    : ok=7    changed=2    unreachable=0    failed=0  
 ```
 
 We can see that seven tasks ran successfully (`ok=7`) and two resulted in
 changes. Since the default policy of UFW is to allow all outgoing traffic and
 deny all incoming traffic, these two tasks did not result in changes.
 
-If you run the playbook again, you should see that seven tasks run successfully
+If you `vagrant provision` again, you should see that seven tasks run successfully
 but this time there are no changes.
 
 Login to the virtual machine to verify that the rules have been setup correctly:
 
 ```
 $ vagrant ssh
-vagrant@vagrant-ubuntu-trusty-64:~$ sudo ufw status
+vagrant@ubuntu-xenial:~$ sudo ufw status
 Status: active
 
 To                         Action      From
 --                         ------      ----
-22                         ALLOW       Anywhere
+22                         ALLOW       Anywhere                  
 22 (v6)                    ALLOW       Anywhere (v6)
 ```
 
@@ -484,15 +484,16 @@ If we login to the virtual machine we can verify that UFW has blocked and logged
 the incoming traffic on all ports other than SSH:
 
 ```
-vagrant@vagrant-ubuntu-trusty-64:~$ sudo tail -n 2 /var/log/syslog
-Nov 22 12:31:05 vagrant-ubuntu-trusty-64 kernel: [  156.774909] [UFW BLOCK]
-IN=eth1 OUT= MAC=08:00:27:cc:95:5c:0a:00:27:00:00:05:08:00 SRC=192.0.2.1
-DST=10.213.213.213 LEN=44 TOS=0x00 PREC=0x00 TTL=59 ID=9884 PROTO=TCP SPT=51556
-DPT=554 WINDOW=1024 RES=0x00 SYN URGP=0
-Nov 22 12:31:05 vagrant-ubuntu-trusty-64 kernel: [  156.774923] [UFW BLOCK]
-IN=eth1 OUT= MAC=08:00:27:cc:95:5c:0a:00:27:00:00:05:08:00 SRC=192.0.2.1
-DST=10.213.213.213 LEN=44 TOS=0x00 PREC=0x00 TTL=43 ID=63657 PROTO=TCP SPT=51556
-DPT=199 WINDOW=1024 RES=0x00 SYN URGP=0
+vagrant@ubuntu-xenial:~$ sudo tail -n 2 /var/log/ufw.log
+Jul 15 14:00:00 ubuntu-xenial kernel: [  572.973254] [UFW BLOCK] IN=enp0s8 OUT=
+MAC=08:00:27:39:30:c6:0a:00:27:00:00:00:08:00 SRC=10.213.213.1 DST=10.213.213.213
+LEN=44 TOS=0x00 PREC=0x00 TTL=39 ID=52085 PROTO=TCP SPT=58104 DPT=5900 WINDOW=1024
+RES=0x00 SYN URGP=0
+
+Jul 15 14:00:07 ubuntu-xenial kernel: [  579.942252] [UFW BLOCK] IN=enp0s8 OUT=
+MAC=08:00:27:39:30:c6:0a:00:27:00:00:00:08:00 SRC=10.213.213.1 DST=10.213.213.213
+LEN=44 TOS=0x00 PREC=0x00 TTL=46 ID=13249 PROTO=TCP SPT=58104 DPT=1024 WINDOW=1024
+RES=0x00 SYN URGP=0
 ```
 
 We've finished with this virtual machine now. Run the following command inside
@@ -542,18 +543,15 @@ that the service must be running.
 Run `vagrant up` and Ansible will configure UFW and then install nginx.
 However, if you try to visit [http://10.213.213.213](http://10.213.213.213) in
 a web browser, your connection will time out as UFW is blocking all incoming
-connections other than SSH. To fix this, we need to add two more tasks to the
+connections other than SSH. To fix this, we need to add another tasks to the
 playbook, immediately underneath and indented at the same level as the existing
-tasks:
+SSH task:
 
 ```yaml
 - name: enable incoming http
   ufw:
     rule: allow
     to_port: http
-- name: reload ufw
-  ufw:
-    state: reloaded
 ```
 
 Run `vagrant provision` and then visit [http://10.213.213.213](http://10.213.213.213)
