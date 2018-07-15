@@ -50,11 +50,14 @@ The last few lines of output should be:
 
 PLAY [all] *********************************************************************
 
-TASK [setup] *******************************************************************
+TASK [Gathering Facts] *********************************************************
+ok: [default]
+
+TASK [ping] ********************************************************************
 ok: [default]
 
 PLAY RECAP *********************************************************************
-default                    : ok=1    changed=0    unreachable=0    failed=0
+default                    : ok=2    changed=0    unreachable=0    failed=0  
 ```
 
 Make sure you destroy the VM afterwards by running the following command in
