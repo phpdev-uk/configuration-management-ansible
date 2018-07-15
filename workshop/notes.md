@@ -187,33 +187,11 @@ with the following contents:
 This tells Vagrant to configure a virtual machine with the following options:
 
  * `config.vm.box`: The default image to use for the virtual machine, in this
- case a 64 bit Ubuntu Trusty 14.04 image which is maintained by the community.
+ case a 64 bit Ubuntu Bionic 18.04 image which is maintained by the community.
  * `config.vm.network`: Create a private network for this virtual machine, with
  its own IP address.
  * `config.vm.provision`: Provision this virtual machine using Vagrant's built-in
  Ansible support.
-
-Start the virtual machine now by running:
-
-```
-vagrant up
-```
-
-Whilst the VM is starting up, we will create the three basic files required to
-managed the node and install a basic firewall.
-
---------------------------------------------------------------------------------
-**NOTE**
-
-You must run `vagrant up` from within the `exercises/ex01` directory. If not,
-you will receive a warning message:
-
-A Vagrant environment or target machine is required to run this
-command. Run `vagrant init` to create a new Vagrant environment. Or,
-get an ID of a target machine from `vagrant global-status` to run
-this command on. A final option is to change to a directory with a
-Vagrantfile and to try again.
---------------------------------------------------------------------------------
 
 ### Firewall playbook
 
@@ -264,6 +242,19 @@ prompt you for this information when you run the playbook.
 
 Run `vagrant up` now to start the virtual machine. Vagrant will automatically
 call Ansible to provision the node at the end of the process.
+
+--------------------------------------------------------------------------------
+**NOTE**
+
+You must run `vagrant up` from within the `exercises/ex01` directory. If not,
+you will receive a warning message:
+
+A Vagrant environment or target machine is required to run this
+command. Run `vagrant init` to create a new Vagrant environment. Or,
+get an ID of a target machine from `vagrant global-status` to run
+this command on. A final option is to change to a directory with a
+Vagrantfile and to try again.
+--------------------------------------------------------------------------------
 
 You should see the following output:
 
