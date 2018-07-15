@@ -541,7 +541,7 @@ As well as the `apt` module, which we've already seen, we're introducing the
 that the service must be running.
 
 Run `vagrant up` and Ansible will configure UFW and then install nginx.
-However, if you try to visit [http://10.213.213.213](http://10.213.213.213) in
+However, if you try to visit [`http://10.213.213.213`](http://10.213.213.213) in
 a web browser, your connection will time out as UFW is blocking all incoming
 connections other than SSH. To fix this, we need to add another tasks to the
 playbook, immediately underneath and indented at the same level as the existing
@@ -554,7 +554,7 @@ SSH task:
     to_port: http
 ```
 
-Run `vagrant provision` and then visit [http://10.213.213.213](http://10.213.213.213)
+Run `vagrant provision` and then visit [`http://10.213.213.213`](http://10.213.213.213)
 in a web browser. You should see a page which indicates that nginx is working.
 
 ## Single playbook
@@ -589,8 +589,8 @@ of Core modules for manipulating files.
 Our test example will be adding a new virtual host to nginx. Enter the `ex03`
 directory and run `vagrant up`.
 
-Within the `ansible` directory, open `playbook.yml` and add this task below the
-one which installs nginx:
+Within the `ansible` directory, create a new file called `tasks.yml` with the
+following content:
 
 ```yaml
 - name: create directory for new virtual host
@@ -598,8 +598,8 @@ one which installs nginx:
     path: /var/www/html
     state: directory
     mode: 0755
-    owner: root
-    group: root
+    owner: www-data
+    group: www-data
 ```
 
 Let's go through the following line by line:
@@ -619,6 +619,12 @@ If the directory specified in `path` does not exist, Ansible will create it and
 all parent directories. In our example both `/var/www` and `/var/www/html` will
 be created, with the same permissions.
 --------------------------------------------------------------------------------
+
+We also want to copy a file into the directory we have just created, as well
+as copying a virtual host configuration file and creating a symbolic link to
+activate it. Finally, we need to reload nginx.
+
+Add the following tasks to `tasks.yml`:
 
 ```yaml
 - name: copy index.html file
@@ -651,7 +657,7 @@ be created, with the same permissions.
     state: reloaded
 ```
 
-Open `http://10.213.213.213:81` in your browser and you should see a Hello World
+Open [`http://10.213.213.213:81`](http://10.213.213.213:81) in your browser and you should see a Hello World
 page.
 
 ## Variables
