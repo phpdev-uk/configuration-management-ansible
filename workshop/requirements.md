@@ -127,12 +127,12 @@ All the required software, with the exception of VirtualBox, supports the
 
 #### Python
 
-* **Minimum version:** 2.7
+* **Minimum version:** 2.7 or 3.5
 * **Ubuntu package:** `python`
 * **Website:** [python.org](https://www.python.org/)
 
 macOS and most Linux distributions come with a recent version of Python 2
 installed by default.
 
-Ansible only supports Python 2 (Python 3 support is under development but is
-unlikely to be widespread for some time).
+Ansible has always supported Python 2, but also supports Python 3 as of version
+2.3.
