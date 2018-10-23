@@ -191,7 +191,9 @@ This tells Vagrant to configure a virtual machine with the following options:
  * `config.vm.network`: Create a private network for this virtual machine, with
  its own IP address.
  * `config.vm.provision`: Provision this virtual machine using Vagrant's built-in
- Ansible support.
+ Ansible support. We also tell Ansible to use the Python 3 interpreter (by default
+Ansible attempts to use `/usr/bin/python`, however that does not exist on Bionic
+unless you install Python 2.x).
 
 ### Firewall playbook
 
