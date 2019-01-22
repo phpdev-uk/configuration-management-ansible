@@ -37,12 +37,14 @@ You can test whether your machine meets the requirements by running the
 following commands:
 
 ```
-git clone https://github.com/pwaring/configuration-management-ansible.git
+wget https://github.com/pwaring/configuration-management-ansible/archive/master.zip
+unzip master.zip
 cd configuration-management-ansible/workshop/exercises/ex00
 vagrant up
 ```
 
-The last few lines of output should be:
+The last few lines of output should be (don't worry if you get a message about
+compatibility mode '2.0'):
 
 ```
 ==> default: Running provisioner: ansible...
