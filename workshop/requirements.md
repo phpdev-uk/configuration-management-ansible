@@ -99,7 +99,7 @@ All the required software, with the exception of VirtualBox, supports the
 
 #### Ansible
 
-  * **Minimum version:** 2.0
+  * **Minimum version:** 2.5
   * **Ubuntu package:** `ansible`
   * **Website:** [ansible.com](https://www.ansible.com/)
 
