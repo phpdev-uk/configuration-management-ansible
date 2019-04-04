@@ -103,12 +103,6 @@ All the required software, with the exception of VirtualBox, supports the
   * **Ubuntu package:** `ansible`
   * **Website:** [ansible.com](https://www.ansible.com/)
 
-#### Git
-
-  * **Minimum version:** 1.8
-  * **Ubuntu package:** `git`
-  * **Website:** [git-scm.com](https://git-scm.com/)
-
 #### Nmap
 
   * **Minimum version:** 7.3
