@@ -13,9 +13,6 @@ This document contains important information about the workshop, including
 minimum hardware requirements and software which must be installed prior to
 arrival.
 
-You will also receive a copy of the notes by email two weeks before the
-workshop, and a printed copy on the day of the workshop.
-
 If you have any technical questions about the workshop, or there are any
 particular areas which you would like us to spend more time on, please let the
 tutor know via email: [paul@phpdeveloper.org.uk](mailto:paul@phpdeveloper.org.uk).
