@@ -48,10 +48,6 @@ covering orchestration in this workshop.
 
 #include "../common/about-ansible.md"
 
-## Alternatives
-
-#include "../common/about-alternatives.md"
-
 ## Terminology
 
 Ansible divides machines into two categories:
