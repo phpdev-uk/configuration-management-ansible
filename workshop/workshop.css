@@ -1,0 +1,19 @@
+<style type="text/css">
+body
+{
+  font-family: sans-serif;
+  font-size: 12pt;
+  margin: 5% 10%;
+}
+
+h1.title, h2.author, h3.date
+{
+  text-align: center;
+}
+
+img
+{
+  border: 0;
+}
+
+</style>
