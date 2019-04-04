@@ -164,11 +164,12 @@ Our first server will be based on an Ubuntu image, on top of which we will
 install a firewall and configure it to allow all outgoing traffic and block all
 incoming traffic (except SSH).
 
-First of all, clone the Git repository which includes all of the workshop
+First of all, download and extract the zip file which includes all of the workshop
 exercises:
 
 ```
-git clone https://github.com/pwaring/configuration-management-ansible.git
+wget https://github.com/pwaring/configuration-management-ansible/archive/master.zip
+unzip master.zip
 ```
 
 Then change into the `workshop/exercises/ex01` directory:
