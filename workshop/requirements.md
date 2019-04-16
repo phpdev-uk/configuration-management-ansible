@@ -121,7 +121,7 @@ All the required software, with the exception of VirtualBox, supports the
 
 #### Vagrant
 
-* **Minimum version:** 1.7
+* **Minimum version:** 2.0
 * **Ubuntu package:** `vagrant`
 * **Website:** [vagrantup.org](https://www.vagrantup.com/)
 
