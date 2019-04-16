@@ -1,4 +1,3 @@
 # Configuration Management with Ansible
 
-Workshop notes for two upcoming training courses on Configuration Management with
-Ansible (Beginner and Intermediate).
+Workshop notes for upcoming workshop: 'Ansible in a Day'.
