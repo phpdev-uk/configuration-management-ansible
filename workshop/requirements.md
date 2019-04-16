@@ -84,7 +84,10 @@ main hard drive will also help virtual machines to boot as quickly as possible.
 ### Software
 
 A recent version of a Linux distribution or macOS is required. The tutor will
-be using Ubuntu 18.04 (Bionic Beaver). Windows is **not** supported.
+be using Ubuntu 18.04 (Bionic Beaver). Windows is **not** supported. This
+includes the Windows Subsystem for Linux and running Linux in a virtual
+machine with Windows as the host. Please do not bring a laptop running Windows
+as you will not be able to complete the workshop.
 
 The following software should be installed before the workshop. Package names
 have been supplied for Ubuntu but are likely to be similar on other
