@@ -11,7 +11,10 @@ fontsize: 11pt
 
 This document contains important information about the workshop, including
 minimum hardware requirements and software which must be installed prior to
-arrival.
+arrival. Even if you are confident that you have all the requirements,
+please try running the sample exercise using the instructions below as this
+will ensure that you have a copy of the virtual machine image that we will
+be using during the workshop.
 
 If you have any technical questions about the workshop, or there are any
 particular areas which you would like us to spend more time on, please let the
