@@ -3,7 +3,7 @@ managed node.
 
 **Control machine:** macOS or Linux, Python 2.6 or 2.7.
 
-**Managed nodes:** Python 2.4 (with *simplejson*), >=2.5, >=3.5; SSH service.
+**Managed nodes:** Python >=2.7, >=3.5; SSH service.
 
 There is no requirement for the operating system on the control machine to match
 the nodes, so you can control Linux nodes from a macOS machine, Windows nodes
