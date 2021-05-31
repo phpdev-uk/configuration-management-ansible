@@ -134,5 +134,5 @@ All the required software, with the exception of VirtualBox, supports the
 macOS and most Linux distributions come with a recent version of Python 2
 installed by default.
 
-Ansible has always supported Python 2, but also supports Python 3 as of version
+Ansible has always supported Python 2, but also supports Python 3 as of Ansible
 2.3.

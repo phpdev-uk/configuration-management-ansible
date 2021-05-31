@@ -38,7 +38,7 @@ and hardware requirements for this workshop.
 ## Orchestration
 
 You may also have heard of orchestration, which is often discussed alongside
-configuration management. There is a degree of overlap between the two concepts,
+configuration management. There is some overlap between the two concepts,
 but the broad difference is that configuration management relates to existing
 machines (physical or virtual), whereas orchestration involves the creation of
 machines (e.g. in response to demand). Due to time constraints, we won't be
