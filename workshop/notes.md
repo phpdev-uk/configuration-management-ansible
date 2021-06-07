@@ -185,12 +185,12 @@ with the following contents:
 This tells Vagrant to configure a virtual machine with the following options:
 
  * `config.vm.box`: The default image to use for the virtual machine, in this
- case a 64 bit Ubuntu Bionic 18.04 image which is maintained by the community.
+ case a 64 bit Ubuntu 20.04 (Focal Fossa) image which is maintained by the community.
  * `config.vm.network`: Create a private network for this virtual machine, with
  its own IP address.
  * `config.vm.provision`: Provision this virtual machine using Vagrant's built-in
  Ansible support. We also tell Ansible to use the Python 3 interpreter (by default
-Ansible attempts to use `/usr/bin/python`, however that does not exist on Bionic
+Ansible attempts to use `/usr/bin/python`, however that does not exist on Focal
 unless you install Python 2.x).
 
 ### Firewall playbook

@@ -1,7 +1,7 @@
 Vagrant.require_version ">= 1.7.0"
 
 Vagrant.configure(2) do |config|
-  config.vm.box = "ubuntu/bionic64"
+  config.vm.box = "ubuntu/focal64"
 
   # Create a private network for testing
   config.vm.network "private_network", ip: "10.213.213.213"
