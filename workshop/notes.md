@@ -459,42 +459,7 @@ To                         Action      From
 ```
 
 We can see that the UFW service is active and incoming SSH connections are
-allowed from anywhere, over IPv4 and IPv6. We can verify that the firewall is
-in place by using nmap to run a port scan against the virtual machine (from
-your laptop):
-
-```
-sudo nmap -sS 10.213.213.213
-```
-
-The output should be similar to:
-
-```
-Nmap scan report for 10.213.213.213
-Host is up (0.00056s latency).
-Not shown: 999 filtered ports
-PORT   STATE SERVICE
-22/tcp open  ssh
-MAC Address: 08:00:27:CC:95:5C (Oracle VirtualBox virtual NIC)
-
-Nmap done: 1 IP address (1 host up) scanned in 18.76 seconds
-```
-
-If we login to the virtual machine we can verify that UFW has blocked and logged
-the incoming traffic on all ports other than SSH:
-
-```
-vagrant@ubuntu-xenial:~$ sudo tail -n 2 /var/log/ufw.log
-Jul 15 14:00:00 ubuntu-xenial kernel: [  572.973254] [UFW BLOCK] IN=enp0s8 OUT=
-MAC=08:00:27:39:30:c6:0a:00:27:00:00:00:08:00 SRC=10.213.213.1 DST=10.213.213.213
-LEN=44 TOS=0x00 PREC=0x00 TTL=39 ID=52085 PROTO=TCP SPT=58104 DPT=5900 WINDOW=1024
-RES=0x00 SYN URGP=0
-
-Jul 15 14:00:07 ubuntu-xenial kernel: [  579.942252] [UFW BLOCK] IN=enp0s8 OUT=
-MAC=08:00:27:39:30:c6:0a:00:27:00:00:00:08:00 SRC=10.213.213.1 DST=10.213.213.213
-LEN=44 TOS=0x00 PREC=0x00 TTL=46 ID=13249 PROTO=TCP SPT=58104 DPT=1024 WINDOW=1024
-RES=0x00 SYN URGP=0
-```
+allowed from anywhere, over IPv4 and IPv6.
 
 We've finished with this virtual machine now. Run the following command inside
 the `ex01` directory to destroy the virtual machine and free up its resources:

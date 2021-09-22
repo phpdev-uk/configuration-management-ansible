@@ -103,36 +103,24 @@ All the required software, with the exception of VirtualBox, supports the
 
 #### Ansible
 
-  * **Minimum version:** 2.5
+  * **Minimum version:** 2.9
   * **Ubuntu package:** `ansible`
   * **Website:** [ansible.com](https://www.ansible.com/)
 
-#### Nmap
-
-  * **Minimum version:** 7.3
-  * **Ubuntu package:** `nmap`
-  * **Website:** [nmap.org](https://nmap.org/)
-
 #### VirtualBox
 
-  * **Minimum version:** 4.3
+  * **Minimum version:** 6.1
   * **Ubuntu package:** `virtualbox`
   * **Website:** [virtualbox.org](https://www.virtualbox.org/)
 
 #### Vagrant
 
-* **Minimum version:** 2.0
+* **Minimum version:** 2.2
 * **Ubuntu package:** `vagrant`
 * **Website:** [vagrantup.org](https://www.vagrantup.com/)
 
 #### Python
 
-* **Minimum version:** 2.7 or 3.5
+* **Minimum version:** 3.5
 * **Ubuntu package:** `python`
 * **Website:** [python.org](https://www.python.org/)
-
-macOS and most Linux distributions come with a recent version of Python 2
-installed by default.
-
-Ansible has always supported Python 2, but also supports Python 3 as of Ansible
-2.3.
